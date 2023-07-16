@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { projectsData } from "../data/projectsData";
 
 const Project = ({ projectNumber }) => {
   const [currentProject] = useState(projectsData[projectNumber]);
+  const [left, setLeft] = useState();
+  const [top, setTop] = useState();
+  const [size, setSize] = useState();
+
+  //   Cette partie est pour faire grossir aléatoirement le rond
+  useEffect(() => {
+    setLeft(Math.floor(Math.random() * 200 + 700 + "px"));
+    setTop(Math.floor(Math.random() * 200 + 150 + "px"));
+    setSize("scale(" + (Math.random() + 0.7) + ")");
+  }, []);
 
   return (
     <div className="project-main">
@@ -27,7 +37,21 @@ const Project = ({ projectNumber }) => {
             className="img"
           />
         </div>
+        <div className="button-container">
+          <a
+            href={currentProject.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover"
+          >
+            <span className="button">voir le site</span>
+          </a>
+        </div>
       </div>
+      <span
+        className="random-circle"
+        style={{ left, top, transform: size }}
+      ></span>
     </div>
   );
 };
